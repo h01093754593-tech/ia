@@ -1,1 +1,82 @@
-<!DOCTYPE html><html style="height: 100%;"><body style="height: 100%; margin: 0;"><iframe src="https://copilotstudio.microsoft.com/environments/Default-9ef36566-f756-4f11-9c5f-307c10f409f9/bots/cre46_aicreativeagentteam_9DvxPP/webchat?__version__=2&enableFileAttachment=false&cliAgent=true" frameborder="0" style="width: 100%; height: 100%; border: 0;"></iframe></body></html>
+<!DOCTYPE html>
+<html lang="ko" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Creative Agent Team</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+        h1 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+        main {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <div class="status-dot"></div>
+            <h1>AI Creative Agent Team</h1>
+        </div>
+    </header>
+    <main>
+        <div class="chat-container">
+            <iframe src="https://copilotstudio.microsoft.com/environments/Default-9ef36566-f756-4f11-9c5f-307c10f409f9/bots/cre46_aicreativeagentteam_9DvxPP/webchat?__version__=2&enableFileAttachment=false&cliAgent=true" frameborder="0"></iframe>
+        </div>
+    </main>
+</body>
+</html>
