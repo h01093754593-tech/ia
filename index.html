@@ -1,82 +1,352 @@
 <!DOCTYPE html>
-<html lang="ko" style="height: 100%;">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Creative Agent Team</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            height: 100%;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-        }
-        header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-        }
-        h1 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #0f172a;
-            margin: 0;
-        }
-        main {
-            flex: 1;
-            padding: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .chat-container {
-            width: 100%;
-            max-width: 1200px;
-            height: 100%;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 크리에이터 캠프 | 상상을 AI로, 나만의 콘텐츠를 오늘 완성하다</title>
+<style>
+:root{--bg:#F5FAFF;--g1:#CFE8FF;--g2:#A8D8FF;--acc:#007AFF;--sub:#5AC8FA;--txt:#1D1D1F;--deep:#0060DF;--mute:rgba(29,29,31,.68);--r:28px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:system-ui,"Malgun Gothic",sans-serif;color:var(--txt);line-height:1.65;
+  background:radial-gradient(900px 600px at 0% 0%,var(--g2),transparent 70%),radial-gradient(800px 600px at 100% 35%,var(--g1),transparent 70%),radial-gradient(900px 600px at 20% 90%,#BFE6FD,transparent 70%),var(--bg);background-attachment:fixed}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--deep);outline-offset:3px;border-radius:12px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.glass{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.75);border-radius:var(--r);position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 12px 36px rgba(0,122,255,.10);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%)}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,0) 60%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:rgba(255,255,255,.94)}}
+.chk{display:inline-block;padding:1px 10px;border-radius:999px;background:#E6F1FF;color:var(--deep);font-weight:800;font-size:.92em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 30px;border-radius:999px;border:0;cursor:pointer;
+  font:800 1.05rem system-ui,"Malgun Gothic",sans-serif;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--acc),var(--deep));box-shadow:0 10px 24px rgba(0,96,223,.28);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+/* nav */
+header.nav{position:sticky;top:12px;z-index:50;margin:12px auto 0;max-width:1120px;padding:0 16px}
+header.nav .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 22px;border-radius:999px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.02em;text-decoration:none}
+.logo svg{width:26px;height:26px}
+nav ul{display:flex;gap:4px;list-style:none}
+nav a{display:block;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.95rem;color:var(--txt)}
+nav a:hover{background:#E6F1FF;color:var(--deep)}
+nav a.cta{background:linear-gradient(135deg,var(--acc),var(--deep));color:#fff}
+/* hero */
+.hero{padding:56px 0 30px;text-align:center}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;font-weight:800;font-size:.9rem;color:var(--deep);background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.8)}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.hero h1{margin:18px auto 0;font-size:clamp(2rem,5vw,3.4rem);line-height:1.22;letter-spacing:-.04em;font-weight:900;max-width:820px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.art{width:min(560px,92%);margin:6px auto 0}
+.art svg{width:100%;height:auto;display:block}
+.hero .lead{font-size:1.12rem;color:var(--mute);max-width:640px;margin:0 auto}
+.meta{margin:26px auto 0;max-width:820px;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 24px;text-align:left}
+.meta div{display:flex;gap:12px;align-items:center}
+.meta svg{width:30px;height:30px;flex:none}
+.meta b{display:block;font-size:.85rem;color:var(--deep)}
+.meta span{font-weight:700}
+.hero .act{margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.hero .act small{color:var(--mute)}
+/* sections */
+section.sec{padding:70px 0 20px}
+.eyebrow{font-weight:800;color:var(--deep);font-size:.9rem;letter-spacing:.06em}
+h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.03em;line-height:1.3;margin:6px 0 26px}
+h2 em{font-style:normal;color:var(--acc)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{padding:28px}
+.ic{width:58px;height:58px;border-radius:50%;background:#E6F1FF;display:grid;place-items:center;margin-bottom:16px}
+.ic svg{width:30px;height:30px}
+.card h3{font-size:1.2rem;letter-spacing:-.02em;margin-bottom:6px}
+.card p{color:var(--mute)}
+.nums{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.num{padding:24px;text-align:center}
+.num strong{display:block;font-size:2.8rem;font-weight:900;color:var(--acc);letter-spacing:-.03em;line-height:1.1}
+.num span{font-weight:700}
+/* program */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s}
+.step{padding:22px 18px;text-align:center}
+.step .no{display:inline-block;padding:3px 12px;border-radius:999px;background:var(--acc);color:#fff;font-weight:800;font-size:.8rem;margin-bottom:12px}
+.step .ic{margin:0 auto 12px}
+.step h3{font-size:1.05rem}
+.step p{font-size:.92rem;color:var(--mute);margin-top:4px}
+.note{margin-top:10px;font-size:.9rem;color:var(--mute)}
+.tl{margin-top:28px;padding:30px 28px}
+.tl h3{font-size:1.15rem;margin-bottom:18px}
+.tl ol{list-style:none;display:grid;grid-template-columns:repeat(9,1fr);position:relative}
+.tl ol::before{content:"";position:absolute;left:4%;right:4%;top:43px;height:4px;border-radius:2px;background:var(--g2)}
+.tl li{text-align:center;position:relative;padding:0 2px}
+.tl time{display:block;font-weight:800;font-size:.95rem;height:30px}
+.tl li i{display:block;width:20px;height:20px;margin:0 auto 10px;border-radius:50%;background:#fff;border:3px solid var(--acc);position:relative}
+.tl li.hi i{width:28px;height:28px;margin-top:-4px;background:var(--acc)}
+.tl li.hi time,.tl li.hi span{color:var(--deep);font-weight:800}
+.tl span{font-size:.88rem;display:block;line-height:1.35}
+.flow{margin-top:20px;display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.flow .glass{padding:26px}
+.flow h3{font-size:1.1rem;margin-bottom:12px}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chain span{padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--g1);font-weight:700;font-size:.92rem}
+.chain b{color:var(--acc)}
+.chain span.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.gift{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.gift li{padding:6px 12px;border-radius:999px;background:#E6F1FF;color:var(--deep);font-weight:700;font-size:.9rem}
+/* faq */
+.faq{display:grid;gap:12px;max-width:860px}
+.faq .item{border-radius:22px;overflow:hidden}
+.faq button{width:100%;text-align:left;background:none;border:0;padding:20px 56px 20px 24px;font:800 1.05rem system-ui,"Malgun Gothic",sans-serif;color:var(--txt);cursor:pointer;position:relative;border-radius:22px}
+.faq button::after{content:"";position:absolute;right:24px;top:50%;width:10px;height:10px;border-right:3px solid var(--acc);border-bottom:3px solid var(--acc);transform:translateY(-70%) rotate(45deg);transition:transform .25s}
+.faq button[aria-expanded="true"]::after{transform:translateY(-30%) rotate(-135deg)}
+.faq .ans{padding:0 24px 20px;color:var(--mute)}
+.faq .ans[hidden]{display:none}
+/* form */
+.formcard{padding:34px;display:grid;grid-template-columns:.9fr 1.4fr;gap:34px}
+.formcard aside p{color:var(--mute);margin-top:8px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+label{font-weight:700;font-size:.95rem}
+label .req{color:var(--deep)}
+input,textarea{font:inherit;padding:12px 16px;border-radius:16px;border:1px solid var(--g1);background:rgba(255,255,255,.9);color:var(--txt)}
+input:focus-visible,textarea:focus-visible{outline:3px solid var(--deep);outline-offset:1px}
+textarea{min-height:90px;resize:vertical}
+.agree{flex-direction:row;align-items:flex-start;gap:10px}
+.agree input{width:20px;height:20px;margin-top:3px;accent-color:var(--acc)}
+.hint{font-size:.85rem;color:var(--mute)}
+#done{grid-column:1/-1;padding:16px 20px;border-radius:18px;background:#E6F1FF;color:var(--deep);font-weight:800}
+footer{margin-top:70px;padding:34px 0 44px}
+footer .glass{padding:24px 28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.95rem}
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.btn{transition:none}.faq button::after{transition:none}}
+@media (max-width:960px){.steps{grid-template-columns:repeat(2,1fr)}.tl ol{grid-template-columns:repeat(3,1fr);row-gap:18px}.tl ol::before{display:none}}
+@media (max-width:768px){
+  nav ul li:not(:last-child){display:none}
+  .grid3,.nums,.steps,.flow,.formcard,form,.meta{grid-template-columns:1fr}
+  .formcard{padding:24px}
+}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important;transition:none!important}
+  .glass{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border:1px solid #CFE8FF}.glass::before{display:none}
+  header.nav{position:static}.reveal{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo-area">
-            <div class="status-dot"></div>
-            <h1>AI Creative Agent Team</h1>
-        </div>
-    </header>
-    <main>
-        <div class="chat-container">
-            <iframe src="https://copilotstudio.microsoft.com/environments/Default-9ef36566-f756-4f11-9c5f-307c10f409f9/bots/cre46_aicreativeagentteam_9DvxPP/webchat?__version__=2&enableFileAttachment=false&cliAgent=true" frameborder="0"></iframe>
-        </div>
-    </main>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M19 4l-8.5 9.5"/><path d="M10.5 13.5c-2 0-3.5 1.4-3.5 3.3 0 1.5-1 2.4-3 2.7 1.6 1 3.4 1.3 5 1 2.2-.4 3.5-2 3.5-4"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.8.2 5 2.6 5 5.8"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="bar glass">
+    <a class="logo" href="#top" aria-label="AI 크리에이터 캠프 처음으로">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><path d="M6 18 L13 7 L20 16" stroke="#5AC8FA" stroke-width="2" fill="none"/><circle cx="6" cy="18" r="3.4" fill="#fff" stroke="#007AFF" stroke-width="2"/><circle cx="13" cy="7" r="3.4" fill="#007AFF"/><circle cx="20" cy="16" r="3.4" fill="#fff" stroke="#007AFF" stroke-width="2"/></svg>
+      AI 크리에이터 캠프
+    </a>
+    <nav aria-label="주요 메뉴">
+      <ul>
+        <li><a href="#about">캠프 소개</a></li>
+        <li><a href="#program">프로그램·일정</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a class="cta" href="#apply">참가 신청</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <span class="tag"><i></i>고등학생 1일 AI 창작 체험 캠프</span>
+    <h1 id="hero-title">상상을 AI로,<br>나만의 콘텐츠를 <em>오늘</em> 완성하다</h1>
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 600 300">
+        <defs>
+          <radialGradient id="h" cx="50%" cy="55%" r="50%"><stop offset="0" stop-color="#A8D8FF" stop-opacity=".7"/><stop offset="1" stop-color="#A8D8FF" stop-opacity="0"/></radialGradient>
+          <linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6F1FF"/><stop offset="1" stop-color="#CFE8FF"/></linearGradient>
+        </defs>
+        <ellipse cx="300" cy="170" rx="260" ry="140" fill="url(#h)"/>
+        <g stroke="#5AC8FA" stroke-width="3" fill="none"><path d="M300 178 L200 112 M300 178 L300 70 M300 178 L404 112 M200 112 L300 70 L404 112 M200 112 L120 50 M404 112 L486 44 M300 70 L486 44"/></g>
+        <rect x="190" y="178" width="220" height="102" rx="14" fill="#fff" stroke="#007AFF" stroke-width="4"/>
+        <rect x="204" y="191" width="192" height="76" rx="8" fill="url(#scr)"/>
+        <rect x="220" y="205" width="90" height="10" rx="5" fill="#5AC8FA"/><rect x="220" y="223" width="140" height="8" rx="4" fill="#fff"/>
+        <rect x="220" y="238" width="115" height="8" rx="4" fill="#fff"/><rect x="220" y="252" width="56" height="10" rx="5" fill="#007AFF"/>
+        <rect x="150" y="280" width="300" height="16" rx="8" fill="#fff" stroke="#007AFF" stroke-width="4"/>
+        <g fill="#fff" stroke="#007AFF" stroke-width="4"><circle cx="200" cy="112" r="34"/><circle cx="300" cy="70" r="40"/><circle cx="404" cy="112" r="34"/><circle cx="300" cy="178" r="8"/><circle cx="120" cy="50" r="8"/><circle cx="486" cy="44" r="8"/></g>
+        <rect x="182" y="99" width="36" height="22" rx="11" fill="none" stroke="#007AFF" stroke-width="4"/>
+        <path d="M190 121 L187 131 L198 121" fill="none" stroke="#007AFF" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M290 54 L290 86 L316 70 Z" fill="#007AFF"/>
+        <path d="M420 94 L398 120" stroke="#007AFF" stroke-width="6" stroke-linecap="round"/><circle cx="393" cy="125" r="8" fill="#5AC8FA"/>
+        <g fill="#5AC8FA"><path d="M80 140 l4 -12 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4z"/><path d="M520 150 l3 -9 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3z"/><path d="M380 20 l2 -6 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2z"/></g>
+      </svg>
+    </div>
+    <p class="lead">고등학생 60명이 생성형 AI로 나만의 콘텐츠를 직접 만들어 보는 1일 체험 캠프</p>
+    <div class="meta glass">
+      <div><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-cal"/></svg><p><b>일시</b><span>2026년 11월 21일(토) 10:00~17:00</span></p></div>
+      <div><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-pin"/></svg><p><b>장소</b><span class="chk">[확인 필요]</span></p></div>
+    </div>
+    <div class="act">
+      <a class="btn" href="#apply">우리 학교 참가 신청하기</a>
+      <small>학교 담당 선생님이 학교 단위로 신청해 주세요. 신청 마감 <span class="chk">[확인 필요]</span></small>
+    </div>
+  </section>
+
+  <section class="sec wrap reveal" id="about" aria-labelledby="about-title">
+    <p class="eyebrow">ABOUT</p>
+    <h2 id="about-title">하루 만에, <em>안전하게</em>, 기억에 남게</h2>
+    <div class="grid3">
+      <article class="card glass">
+        <div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-bulb"/></svg></div>
+        <h3>코딩 몰라도 OK</h3>
+        <p>프롬프트 기초부터 차근차근 배우며 하루 만에 이미지·글·음악·숏폼 콘텐츠를 완성합니다.</p>
+      </article>
+      <article class="card glass">
+        <div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <h3>안전하게 배우는 AI</h3>
+        <p>저작권, 개인정보, 딥페이크 구분까지 익혀 AI를 책임감 있게 쓰는 법을 배웁니다.</p>
+      </article>
+      <article class="card glass">
+        <div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-trophy"/></svg></div>
+        <h3>남는 경험</h3>
+        <p>팀별 결과물을 쇼케이스에서 발표하고, 수료증과 함께 오늘 만든 작품을 가져갑니다.</p>
+      </article>
+    </div>
+    <div class="nums">
+      <div class="num glass"><strong>60명</strong><span>고등학생 모집</span></div>
+      <div class="num glass"><strong>15팀</strong><span>4인 1팀 실습 [가정]</span></div>
+      <div class="num glass"><strong>7시간</strong><span>10:00~17:00 하루 캠프</span></div>
+    </div>
+  </section>
+
+  <section class="sec wrap reveal" id="program" aria-labelledby="program-title">
+    <p class="eyebrow">PROGRAM &amp; SCHEDULE</p>
+    <h2 id="program-title">배우고, 만들고, 발표하는 <em>5단계</em></h2>
+    <div class="steps">
+      <article class="step glass"><span class="no">STEP 1</span><div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-chip"/></svg></div><h3>AI 첫걸음</h3><p>생성형 AI 원리와 프롬프트 기초</p></article>
+      <article class="step glass"><span class="no">STEP 2</span><div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-shield"/></svg></div><h3>AI 안전·윤리</h3><p>저작권, 개인정보, 딥페이크 구분</p></article>
+      <article class="step glass"><span class="no">STEP 3</span><div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-brush"/></svg></div><h3>크리에이터 실습</h3><p>4인 15팀, 이미지·글·음악·숏폼</p></article>
+      <article class="step glass"><span class="no">STEP 4</span><div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-trophy"/></svg></div><h3>쇼케이스 &amp; 시상</h3><p>팀별 결과물 발표</p></article>
+      <article class="step glass"><span class="no">STEP 5</span><div class="ic"><svg fill="none" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-people"/></svg></div><h3>진로 토크</h3><p>AI 크리에이터 현업자와의 대화</p></article>
+    </div>
+    <p class="note">프로그램 구성은 [가정]이며, 확정 후 안내드립니다.</p>
+
+    <div class="tl glass">
+      <h3>당일 시간표 · 2026년 11월 21일(토) [가정]</h3>
+      <ol>
+        <li><time>09:30</time><i></i><span>등록</span></li>
+        <li><time>10:00</time><i></i><span>개회·오리엔테이션</span></li>
+        <li><time>10:20</time><i></i><span>AI 첫걸음</span></li>
+        <li><time>11:10</time><i></i><span>AI 안전·윤리</span></li>
+        <li><time>12:00</time><i></i><span>점심</span></li>
+        <li class="hi"><time>13:00</time><i></i><span>크리에이터 실습</span></li>
+        <li><time>15:30</time><i></i><span>쇼케이스</span></li>
+        <li><time>16:30</time><i></i><span>진로 토크·시상</span></li>
+        <li><time>17:00</time><i></i><span>폐회·수료</span></li>
+      </ol>
+    </div>
+
+    <div class="flow">
+      <div class="glass">
+        <h3>신청부터 참가까지 [가정]</h3>
+        <div class="chain"><span>신청 접수</span><b>→</b><span>11월 1주 신청 마감</span><b>→</b><span>11월 2주 참가 확정·사전 안내</span><b>→</b><span class="on">11월 21일(토) 캠프 참가</span></div>
+      </div>
+      <div class="glass">
+        <h3>제공 사항 [가정]</h3>
+        <ul class="gift"><li>점심 도시락·다과</li><li>실습용 노트북(팀당 1대)</li><li>생성형 AI 유료 계정(팀당 1개)</li><li>교재</li><li>수료증</li><li>참가 기념품</li><li>단체 상해보험</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap reveal" id="faq" aria-labelledby="faq-title">
+    <p class="eyebrow">FAQ</p>
+    <h2 id="faq-title">자주 묻는 질문</h2>
+    <div class="faq">
+      <div class="item glass"><button type="button" aria-expanded="false" aria-controls="a1" id="q1">코딩이나 AI를 처음 접하는 학생도 참여할 수 있나요?</button>
+        <div class="ans" id="a1" role="region" aria-labelledby="q1" hidden>네. 코딩 지식이 없어도 됩니다. 오전 'AI 첫걸음' 시간에 생성형 AI의 원리와 프롬프트 기초부터 함께 익힙니다.</div></div>
+      <div class="item glass"><button type="button" aria-expanded="false" aria-controls="a2" id="q2">한 학교에서 몇 명까지 신청할 수 있나요?</button>
+        <div class="ans" id="a2" role="region" aria-labelledby="q2" hidden>전체 정원은 고등학생 60명이며 4인 1팀으로 운영합니다 [가정]. 학교별 신청 인원 한도는 <span class="chk">[확인 필요]</span>입니다.</div></div>
+      <div class="item glass"><button type="button" aria-expanded="false" aria-controls="a3" id="q3">참가비가 있나요? 무엇을 준비해 가야 하나요?</button>
+        <div class="ans" id="a3" role="region" aria-labelledby="q3" hidden>참가비는 <span class="chk">[확인 필요]</span>입니다. 실습용 노트북(팀당 1대), 생성형 AI 유료 계정(팀당 1개), 교재, 점심 도시락·다과가 제공되므로 따로 준비할 장비는 없습니다 [가정].</div></div>
+      <div class="item glass"><button type="button" aria-expanded="false" aria-controls="a4" id="q4">인솔 선생님도 함께 참여하나요?</button>
+        <div class="ans" id="a4" role="region" aria-labelledby="q4" hidden>네. 인솔 교사와 함께 참가합니다. 학교당 인솔 교사 인원과 교사용 별도 프로그램 여부는 <span class="chk">[확인 필요]</span>입니다.</div></div>
+      <div class="item glass"><button type="button" aria-expanded="false" aria-controls="a5" id="q5">신청 후 참가는 어떻게 확정되나요?</button>
+        <div class="ans" id="a5" role="region" aria-labelledby="q5" hidden>11월 1주에 신청을 마감하고, 11월 2주에 참가 확정과 사전 안내를 드립니다 [가정]. 정원을 넘을 경우의 선정 기준은 <span class="chk">[확인 필요]</span>입니다.</div></div>
+    </div>
+  </section>
+
+  <section class="sec wrap reveal" id="apply" aria-labelledby="apply-title">
+    <div class="formcard glass">
+      <aside>
+        <p class="eyebrow">APPLY</p>
+        <h2 id="apply-title">우리 학교 <em>참가 신청</em></h2>
+        <p>학교 담당 선생님이 학교 단위로 신청해 주세요. 학생 명단은 참가 확정 후 따로 받습니다 [가정].</p>
+        <p>신청 마감 <span class="chk">[확인 필요]</span></p>
+        <p class="hint">이 폼은 데모입니다. 입력값은 어디에도 전송·저장되지 않습니다.</p>
+      </aside>
+      <form id="applyForm" novalidate>
+        <div class="f"><label for="school">학교명 <span class="req">(필수)</span></label><input id="school" name="school" required placeholder="○○고등학교" autocomplete="organization"></div>
+        <div class="f"><label for="tname">담당 선생님 성함 <span class="req">(필수)</span></label><input id="tname" name="tname" required placeholder="홍길동" autocomplete="name"></div>
+        <div class="f"><label for="phone">연락처 <span class="req">(필수)</span></label><input id="phone" name="phone" type="tel" required placeholder="010-0000-0000" autocomplete="tel"></div>
+        <div class="f"><label for="email">이메일 <span class="req">(필수)</span></label><input id="email" name="email" type="email" required placeholder="teacher@school.kr" autocomplete="email"></div>
+        <div class="f"><label for="students">참가 희망 학생 수 <span class="req">(필수)</span></label><input id="students" name="students" type="number" min="1" max="60" required aria-describedby="sh"><span class="hint" id="sh">4인 1팀 기준 [가정]</span></div>
+        <div class="f"><label for="teachers">인솔 교사 수 <span class="req">(필수)</span></label><input id="teachers" name="teachers" type="number" min="1" required></div>
+        <div class="f full"><label for="memo">문의·요청 사항 (선택)</label><textarea id="memo" name="memo"></textarea></div>
+        <div class="f full agree"><input id="agree" name="agree" type="checkbox" required><label for="agree">개인정보 수집·이용에 동의합니다. <span class="req">(필수)</span></label></div>
+        <div class="f full"><button class="btn" type="submit">우리 학교 참가 신청하기</button></div>
+        <p id="done" role="status" aria-live="polite" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="glass">
+    <span><b>AI 크리에이터 캠프</b> · 2026년 11월 21일(토) 10:00~17:00 · 장소 <span class="chk">[확인 필요]</span></span>
+    <span>주최 <span class="chk">[확인 필요]</span> · 문의 <span class="chk">[확인 필요]</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // FAQ toggle
+  document.querySelectorAll('.faq button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('aria-expanded')==='true';
+      b.setAttribute('aria-expanded',String(!open));
+      document.getElementById(b.getAttribute('aria-controls')).hidden=open;
+    });
+  });
+  // smooth scroll for menu (respects reduced motion)
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href').slice(1),t=document.getElementById(id);
+      if(!t)return; e.preventDefault();
+      t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+      history.replaceState(null,'','#'+id);
+    });
+  });
+  // reveal on scroll
+  var els=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in');});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+    els.forEach(function(el){io.observe(el);});}
+  // demo form: no data is sent or stored
+  var f=document.getElementById('applyForm'),done=document.getElementById('done');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!f.checkValidity()){f.reportValidity();return;}
+    done.textContent='신청이 접수되었습니다(데모)';
+    done.hidden=false; f.reset();
+  });
+})();
+</script>
 </body>
 </html>
